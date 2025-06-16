@@ -26,6 +26,8 @@ CREATE TABLE IF NOT EXISTS pedido (
   FOREIGN KEY (metodo_pago_id) REFERENCES metodo_pago(id)
 );
 
+ALTER TABLE pedido
+ADD COLUMN estado ENUM('Pendiente', 'En preparación', 'Enviado', 'Entregado', 'Cancelado') NOT NULL DEFAULT 'Pendiente';
 
 CREATE TABLE IF NOT EXISTS factura (
   id               INT  AUTO_INCREMENT PRIMARY KEY,
@@ -126,3 +128,5 @@ CREATE TABLE IF NOT EXISTS ingredientes_extra (
   FOREIGN KEY (detalle_id)     REFERENCES detalle_pedido(id),
   FOREIGN KEY (ingrediente_id) REFERENCES ingrediente(id)
 );
+
+SHOW TABLES

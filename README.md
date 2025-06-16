@@ -83,7 +83,11 @@
    - `AFTER UPDATE` en `ingrediente`
    - Si el stock cae por debajo de 10 unidades, inserta una alerta en `notificacion_stock_bajo`.
 
-# Base de Datos PIzzas
+# Base de Datos Pizzas
+
+![](data\BD.png)
+
+
 
 ```sql
 CREATE DATABASE IF NOT EXISTS pizzas COLLATE utf8mb4_general_ci;
