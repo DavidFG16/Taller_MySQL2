@@ -88,3 +88,17 @@ CALL ps_cancelar_pedido(2)
 SELECT * FROM pedido
 
 SELECT * FROM detalle_pedido
+
+-- PUNTO 5
+
+DELIMITER //
+
+DROP PROCEDURE IF EXISTS ps_cancelar_pedido //
+
+CREATE PROCEDURE ps_cancelar_pedido (IN p_pedido_id INT)
+BEGIN
+    
+  
+END //
+
+DELIMITER ;
