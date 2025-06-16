@@ -1,7 +1,6 @@
 USE pizzas;
 
 -- PUNTO 1
-
 DELIMITER $$;
 DROP FUNCTION IF EXISTS fc_calcular_subtotal_pizza
 
@@ -32,3 +31,30 @@ SELECT fc_calcular_subtotal_pizza(1) AS CasiTotal
 SELECT * FROM ingrediente
 
 SELECT * FROM producto_presentacion
+
+
+-- PUNTO 2
+DELIMITER //
+
+DROP FUNCTION IF EXISTS fc_descuento_por_cantidad //
+
+CREATE FUNCTION fc_descuento_por_cantidad (p_cantidad INT)
+RETURNS DECIMAL(5,2)
+DETERMINISTIC
+BEGIN
+    DECLARE v_descuento DECIMAL(5,2);
+
+    IF p_cantidad >= 5 THEN
+        SET v_descuento = 0.10; 
+    ELSE
+        SET v_descuento = 0.00; 
+    END IF;
+
+    RETURN v_descuento;
+END //
+
+DELIMITER ;
+
+SELECT fc_descuento_por_cantidad(3) AS descuento;
+SELECT fc_descuento_por_cantidad(5) AS descuento; 
+SELECT fc_descuento_por_cantidad(10) AS descuento;
