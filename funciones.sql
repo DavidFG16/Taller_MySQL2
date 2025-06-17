@@ -85,3 +85,30 @@ END $$
 DELIMITER ;
 
 SELECT fc_precio_final_pedido(6, 1) AS precio_final;
+
+-- PUNTO 4
+
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS fc_obtener_stock_ingrediente $$
+
+CREATE FUNCTION fc_obtener_stock_ingrediente (p_ingrediente_id INT)
+RETURNS INT
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE stock_c INT; 
+
+    SELECT stock INTO stock_c 
+    FROM ingrediente AS ing 
+    WHERE p_ingrediente_id = ing.id;
+
+    RETURN(stock_c);
+
+END $$
+
+DELIMITER ;
+
+SELECT fc_obtener_stock_ingrediente(3);
+
+SELECT * FROM ingrediente
