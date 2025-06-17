@@ -112,3 +112,29 @@ DELIMITER ;
 SELECT fc_obtener_stock_ingrediente(3);
 
 SELECT * FROM ingrediente
+
+-- PUNTO 5
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS fc_es_pizza_popular $$
+
+CREATE FUNCTION fc_es_pizza_popular ()
+RETURNS INT
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+
+
+    RETURN();
+
+END $$
+
+DELIMITER ;
+
+
+SELECT dp.cantidad, propre.presentacion_id, tipro.nombre 
+FROM detalle_pedido AS dp
+INNER JOIN detalle_pedido_producto AS dppro ON dp.id = dppro.detalle_id
+INNER JOIN producto_presentacion AS propre ON dppro.producto_presentacion_id = propre.id
+INNER JOIN producto AS p ON propre.producto_id = p.id
+INNER JOIN tipo_producto AS tipro ON tipro.id = p.tipo_producto_id
