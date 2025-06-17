@@ -58,3 +58,30 @@ DELIMITER ;
 SELECT fc_descuento_por_cantidad(3) AS descuento;
 SELECT fc_descuento_por_cantidad(5) AS descuento; 
 SELECT fc_descuento_por_cantidad(10) AS descuento;
+
+-- PUNTO 3
+DELIMITER $$
+
+DROP FUNCTION IF EXISTS fc_precio_final_pedido $$
+
+CREATE FUNCTION fc_precio_final_pedido (p_cantidad INT, p_pizza_id INT)
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+READS SQL DATA
+BEGIN
+    DECLARE v_subtotal DECIMAL(10,2);
+    DECLARE v_descuento DECIMAL(5,2);
+    DECLARE v_total DECIMAL(10,2);
+
+    SET v_subtotal = fc_calcular_subtotal_pizza(p_pizza_id);
+
+    SET v_descuento = fc_descuento_por_cantidad(p_cantidad);
+
+    SET v_total = v_subtotal * p_cantidad * (1 - v_descuento);
+
+    RETURN v_total;
+END $$
+
+DELIMITER ;
+
+SELECT fc_precio_final_pedido(6, 1) AS precio_final;
