@@ -223,6 +223,8 @@ INSERT INTO cliente (nombre, telefono, direccion) VALUES
 ('María López', '3001234567', 'Calle 10 #20-30, Bogotá'),
 ('Juan Pérez', '3107654321', 'Carrera 5 #45-67, Medellín'),
 ('Ana Gómez',  '3209876543', 'Av. Siempre Viva 742, Cali');
+('David Gamboa',  '3216385433', 'Soleri Parque Residencial, Bucaramanga');
+
 
 INSERT INTO metodo_pago (nombre) VALUES
 ('Efectivo'),
@@ -273,6 +275,7 @@ INSERT INTO pedido (fecha_recogida, total, cliente_id, metodo_pago_id) VALUES
 ('2025-06-10 12:00:00', 35000, 1, 1),
 ('2025-06-09 13:30:00', 50000, 2, 2),
 ('2025-06-08 18:45:00', 20000, 3, 3);
+('2025-06-15 16:00:00', 65000, 4, 1)
 
 INSERT INTO detalle_pedido (pedido_id, cantidad) VALUES
 (1, 2),
