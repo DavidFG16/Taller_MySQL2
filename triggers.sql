@@ -99,10 +99,56 @@ DELIMITER ;
 INSERT INTO factura(total, fecha, pedido_id, cliente_id) VALUES
 (35000, '2025-06-10 12:05:00', 4, 4);
 
-
 SELECT * FROM pedido
 
 SELECT * FROM factura
 
+-- PUNTO 6
 
+DELIMITER // 
+DROP TRIGGER IF EXISTS tg_after_delete_detalle_pedido_pizza //
+
+CREATE TRIGGER IF NOT EXISTS tg_after_delete_detalle_pedido_pizza
+AFTER DELETE
+FOR EACH ROW
+BEGIN
+    -- No existe detalle_pedido_pizza en la BD
+END //
+DELIMITER ;
+
+
+-- PUNTO 7
+
+CREATE TABLE IF NOT EXISTS notificacion_stock_bajo (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ingrediente_id INT NOT NULL,
+    mensaje VARCHAR(255) NOT NULL,
+    fecha_notificacion DATETIME NOT NULL,
+    stock_actual INT NOT NULL,
+    FOREIGN KEY (ingrediente_id) REFERENCES ingrediente(id)
+);
+
+DELIMITER //
+
+CREATE TRIGGER tg_after_update_ingrediente_stock
+AFTER UPDATE ON ingrediente
+FOR EACH ROW
+BEGIN
+    IF NEW.stock < 10 THEN
+        INSERT INTO notificacion_stock_bajo (ingrediente_id, mensaje, fecha_notificacion, stock_actual)
+        VALUES (
+            NEW.id,
+            CONCAT('Stock bajo para ', NEW.nombre, ': solo ', NEW.stock, ' unidades disponibles.'),
+            NOW(),
+            NEW.stock
+        );
+    END IF;
+END//
+
+DELIMITER ;
+
+UPDATE ingrediente SET stock = 5 WHERE id = 1
+
+SELECT * FROM ingrediente;
+SELECT * FROM notificacion_stock_bajo
 
